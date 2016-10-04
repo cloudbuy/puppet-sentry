@@ -22,7 +22,7 @@ class sentry::service
 
   supervisord::program {
     'sentry-cron':
-      command => "${command} start cron",
+      command => "${command} run cron",
     ;
     'sentry-http':
       command => "${command} start http",
