@@ -25,7 +25,7 @@ class sentry::service
       command => "${command} start http",
     ;
     'sentry-worker':
-      command => "${command} celery worker -B",
+      command => "${command} run worker",
     ;
   } ->
 
