@@ -7,7 +7,7 @@ class sentry::service
 {
   $command = join([
     "${sentry::path}/virtualenv/bin/sentry",
-    "--config=${sentry::path}/sentry.conf.py"
+    "--config=${sentry::path}"
   ], ' ')
 
   Supervisord::Program {
