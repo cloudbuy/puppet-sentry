@@ -73,15 +73,7 @@ BROKER_URL = 'redis://<%= @config['redis']['host'] %>:<%= @config['redis']['port
 #################
 
 SENTRY_RATELIMITER = 'sentry.ratelimits.redis.RedisRateLimiter'
-SENTRY_RATELIMITER_OPTIONS = {
-    'cluster': {
-        0: {
-            'host': '<%= @config['redis']['host'] %>',
-            'port': <%= @config['redis']['port'] %>,
-            'db': 3,
-        }
-    }
-}
+SENTRY_RATELIMITER_OPTIONS = {'cluster': 'ratelimit'}
 
 ####################
 ## Update Buffers ##
@@ -93,15 +85,7 @@ SENTRY_RATELIMITER_OPTIONS = {
 # (read: if you send any kind of real data to Sentry, you should enable buffers)
 
 SENTRY_BUFFER = 'sentry.buffer.redis.RedisBuffer'
-SENTRY_BUFFER_OPTIONS = {
-    'cluster': {
-        0: {
-            'host': '<%= @config['redis']['host'] %>',
-            'port': <%= @config['redis']['port'] %>,
-            'db': 4,
-        }
-    }
-}
+SENTRY_BUFFER_OPTIONS = {'cluster': 'buffer'}
 
 ############
 ## Quotas ##
@@ -111,15 +95,7 @@ SENTRY_BUFFER_OPTIONS = {
 # a whole.
 
 SENTRY_QUOTAS = 'sentry.quotas.redis.RedisQuota'
-SENTRY_QUOTA_OPTIONS = {
-    'cluster': {
-        0: {
-            'host': '<%= @config['redis']['host'] %>',
-            'port': <%= @config['redis']['port'] %>,
-            'db': 5,
-        }
-    }
-}
+SENTRY_QUOTA_OPTIONS = {'cluster': 'quotas'}
 
 ##########
 ## TSDB ##
@@ -129,15 +105,7 @@ SENTRY_QUOTA_OPTIONS = {
 # alerts possible.
 
 SENTRY_TSDB = 'sentry.tsdb.redis.RedisTSDB'
-SENTRY_TSDB_OPTIONS = {
-    'hosts': {
-        0: {
-            'host': '<%= @config['redis']['host'] %>',
-            'port': <%= @config['redis']['port'] %>,
-            'db': 6,
-      }
-    }
-}
+SENTRY_TSDB_OPTIONS = {'cluster': 'tsdb'}
 
 ###########
 # Digests #

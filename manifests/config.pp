@@ -33,6 +33,21 @@ class sentry::config
     ),
   }
 
+  $_redis_clusters = {
+    'default'   => 1,
+    'ratelimit' => 3,
+    'buffer'    => 4,
+    'quotas'    => 5,
+    'tsdb'      => 6
+  }
+  $redis_clusters = $_redis_clusters.map |$items| {
+    {$items[0] => {'hosts' => {'0' => {
+      'host' => $config['redis']['host'],
+      'port' => $config['redis']['port'],
+      'db'   => $items[1]
+    }}}}
+  }
+
   $sentry_options = {
     'mail.backend'       => 'smtp',
     'mail.host'          => $config['email']['host'],
@@ -46,17 +61,7 @@ class sentry::config
     'system.secret-key'  => $secret_key,
     'system.url-prefix'  => $url,
 
-    'redis.clusters'     => {
-      'default' => {
-        'hosts' => {
-          '0' => {
-            'host' => $config['redis']['host'],
-            'port' => $config['redis']['port'],
-            'db'   => 1,
-          }
-        }
-      }
-    }
+    'redis.clusters'     => $redis_clusters,
   }
 
   file { "${sentry::path}/sentry.conf.py":
