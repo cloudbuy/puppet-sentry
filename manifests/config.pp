@@ -41,13 +41,13 @@ class sentry::config
     'tsdb'      => 6,
     'digests'   => 7
   }
-  $redis_clusters = $_redis_clusters.map |$items| {
-    {$items[0] => {'hosts' => {'0' => {
+  $redis_clusters = zip(keys($_redis_clusters), $_redis_clusters.map |$items| {
+    {'hosts' => {'0' => {
       'host' => $config['redis']['host'],
       'port' => $config['redis']['port'],
       'db'   => $items[1]
-    }}}}
-  }
+    }}}
+  })
 
   $sentry_options = {
     'mail.backend'       => 'smtp',
