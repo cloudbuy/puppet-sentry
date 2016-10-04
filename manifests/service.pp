@@ -21,6 +21,9 @@ class sentry::service
   anchor { 'sentry::service::begin': } ->
 
   supervisord::program {
+    'sentry-cron':
+      command => "${command} start cron",
+    ;
     'sentry-http':
       command => "${command} start http",
     ;
