@@ -33,9 +33,43 @@ class sentry::config
     ),
   }
 
+  $sentry_options = {
+    'mail.backend'       => 'smtp',
+    'mail.host'          => $config['email']['host'],
+    'mail.password'      => $config['email']['password'],
+    'mail.username'      => $config['email']['user'],
+    'mail.port'          => $config['email']['port'],
+    'mail.use-tls'       => $config['email']['use_tls'],
+    'mail.from'          => $config['email']['from_addr'],
+
+    'system.admin-email' => $email,
+    'system.secret-key'  => $secret_key,
+    'system.url-prefix'  => $url,
+
+    'redis.clusters'     => {
+      'default' => {
+        'hosts' => {
+          '0' => {
+            'host' => $config['redis']['host'],
+            'port' => $config['redis']['port'],
+            'db'   => 1,
+          }
+        }
+      }
+    }
+  }
+
   file { "${sentry::path}/sentry.conf.py":
     ensure  => present,
     content => template('sentry/sentry.conf.py.erb'),
+    owner   => $sentry::owner,
+    group   => $sentry::group,
+    mode    => '0640',
+  } ->
+
+  file { "${sentry::path}/config.yml":
+    ensure  => present,
+    content => inline_template('<%= @sentry_options.to_yaml %>'),
     owner   => $sentry::owner,
     group   => $sentry::group,
     mode    => '0640',
