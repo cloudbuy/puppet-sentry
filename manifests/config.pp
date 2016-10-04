@@ -38,7 +38,8 @@ class sentry::config
     'ratelimit' => 3,
     'buffer'    => 4,
     'quotas'    => 5,
-    'tsdb'      => 6
+    'tsdb'      => 6,
+    'digests'   => 7
   }
   $redis_clusters = $_redis_clusters.map |$items| {
     {$items[0] => {'hosts' => {'0' => {

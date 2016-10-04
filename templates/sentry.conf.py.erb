@@ -114,10 +114,10 @@ SENTRY_TSDB_OPTIONS = {'cluster': 'tsdb'}
 # The digest backend powers notification summaries.
 
 SENTRY_DIGESTS = 'sentry.digests.backends.redis.RedisBackend'
+SENTRY_DIGESTS_OPTIONS = {'cluster': 'digests'}
+
 <% else -%>
 SENTRY_CACHE = 'sentry.cache.django.DjangoCache'
-<% end -%>
-
 <% end -%>
 
 <% if @proxy_enabled -%>
