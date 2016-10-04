@@ -42,7 +42,7 @@ class sentry::config
     'digests'   => 7
   }
   $redis_clusters = hash(flatten($_redis_clusters.map |$items| {
-    [$items[0], {'hosts' => {'0' => {
+    [$items[0], {'hosts' => {0 => {
       'host' => $config['redis']['host'],
       'port' => $config['redis']['port'],
       'db'   => $items[1]
